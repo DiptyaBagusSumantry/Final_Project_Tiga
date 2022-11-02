@@ -1,0 +1,14 @@
+POST  http://localhost:2003/user/register
+Content-Type:  application/json
+
+{
+    "full_name" : "Diptya Bagus Sumantry", 
+    "email": "diptyasoemant@gmail.com", 
+    "password": "abcd1234",
+    "gender": "Laki - Laki",
+    "role": "1",
+    "balance": "10000"
+}
+
+###
+GET http://localhost:2003/users/get
