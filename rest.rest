@@ -56,3 +56,6 @@ Content-Type: application/json
     "stock": "20", 
     "CatagoryId": 5
 }
+
+###
+DELETE http://localhost:2003/product/delete/1

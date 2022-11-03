@@ -11,12 +11,53 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User);
+      this.belongsTo(models.Category);
     }
   }
   Product.init({
-    title: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Tidak boleh Kosong"
+        }
+      }
+
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Price Harus di Isi"
+        },
+        isInt: {
+          args: true,
+          msg: "Price harus angka"
+        },
+        len: [1,50000000]
+      }
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Stock tidak boleh kosong"
+        },
+        min: 5,
+        isInt: {
+          args: true,
+          msg: "Harus memasukan angka"
+        },
+        
+      }
+    },
     CatagoryId: DataTypes.INTEGER
   }, {
     sequelize,

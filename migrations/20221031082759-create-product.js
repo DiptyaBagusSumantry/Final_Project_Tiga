@@ -19,7 +19,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       CatagoryId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Catagory",
+          key: "id"
+        },
+        onUpdate: "CASCADE", //cascade = apbaila salah satu terhapus akan terhapus di user dan photo/saling ber relasi
+        onDelete: "CASCADE" 
       },
       createdAt: {
         allowNull: false,

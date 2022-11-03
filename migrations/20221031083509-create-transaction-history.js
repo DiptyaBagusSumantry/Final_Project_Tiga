@@ -10,10 +10,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       ProductId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Products",
+          key: "id"
+        },
+        onUpdate: "CASCADE", //cascade = apbaila salah satu terhapus akan terhapus di user dan photo/saling ber relasi
+        onDelete: "CASCADE" 
       },
       UserId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id"
+        },
+        onUpdate: "CASCADE", //cascade = apbaila salah satu terhapus akan terhapus di user dan photo/saling ber relasi
+        onDelete: "CASCADE" 
       },
       quantity: {
         type: Sequelize.INTEGER

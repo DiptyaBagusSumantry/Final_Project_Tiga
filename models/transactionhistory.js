@@ -11,13 +11,40 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User)
     }
   }
   TransactionHistory.init({
     ProductId: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER,
-    total_price: DataTypes.INTEGER
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+      notEmpty: {
+        args: true,
+        msg: "Quantity harus di isi"
+      },
+      isInt: {
+        args: true,
+        msg: "Harus memasukan angka"
+      }
+    }
+    },
+    total_price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "quantity tidak boleh kosong"
+        },
+        isInt: {
+          args: true,
+          msg: "Harus memasukan angka"
+        }
+    }
+    }
   }, {
     sequelize,
     modelName: 'TransactionHistory',

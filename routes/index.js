@@ -13,7 +13,7 @@ router.delete('/users/delete/:id', UserController.deleteUser);
 router.post('/product/create', ProductController.createProduct);
 router.get('/product/get', ProductController.getProduct);
 router.put('/product/update/:id', ProductController.updateProduct);
-
+router.delete('/product/delete/:id', ProductController.deleteProduct)
 
 
 

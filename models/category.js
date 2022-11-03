@@ -11,11 +11,34 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.Product);
     }
   }
   Category.init({
-    type: DataTypes.STRING,
-    sold_product_amount: DataTypes.INTEGER
+    tipe: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Tipe harus di Isi"
+        }
+      }
+    },
+    sold_product_amount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "soldProduct harus di isi"
+        },
+        isInt: {
+          args: true,
+          msg: "Harus Memasukan Angka"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Category',
