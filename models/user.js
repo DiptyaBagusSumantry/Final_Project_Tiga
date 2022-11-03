@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.Product);
       this.hasMany(models.TransactionHistory);
+      this.hasMany(models.Category)
     }
   }
   User.init({
