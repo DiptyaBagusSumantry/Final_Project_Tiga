@@ -1,4 +1,4 @@
-POST  http://localhost:2003/user/register
+POST  http://localhost:2003/users/register
 Content-Type:  application/json
 
 {
@@ -10,5 +10,49 @@ Content-Type:  application/json
     "balance": "10000"
 }
 
+//Users
 ###
 GET http://localhost:2003/users/get
+
+###
+PUT http://localhost:2003/users/update/1
+Content-Type: application/json
+
+{
+    "full_name" : "Diptya ", 
+    "email": "diptya@gmail.com", 
+    "password": "abcd1234",
+    "gender": "Laki - Laki",
+    "role": "1",
+    "balance": "10000"   
+}
+
+###
+DELETE http://localhost:2003/users/delete/1
+
+//Product
+###
+POST http://localhost:2003/product/create
+Content-Type: application/json
+
+{
+    "title": "Susu Murni",
+    "price": "10000",
+    "stock": "10", 
+    "CatagoryId": 5
+}
+
+###
+GET http://localhost:2003/product/get
+
+###
+
+PUT http://localhost:2003/product/update/1
+Content-Type: application/json
+
+{
+    "title": "Susu Sapi",
+    "price": "10000",
+    "stock": "20", 
+    "CatagoryId": 5
+}

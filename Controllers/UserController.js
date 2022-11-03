@@ -56,6 +56,64 @@ class UserController{
             
         }
     }
+
+    static async updateUser(req,res){
+        const {full_name, email, gender,role,balance} = req.body;
+        try {
+            // const getId = res.locals.user.id;
+            const cekEmail = await User.findOne({
+                where:{
+                    // id: {[Op.ne]: getId}, //jika id != getId
+                    email
+                }
+            });
+
+            if(cekEmail){
+                res.status(400).json({
+                    message: "Email Tidak Tersedia!"
+                })
+            }else{
+                const user = await User.update({
+                    full_name,
+                    email,
+                    gender,
+                    role,
+                    balance
+                },{
+                    where: {
+                        id: req.params.id
+                    }
+                });
+                res.status(200).json({
+                    message: "Data Berhasil di Update",
+                    // user: {full_name, email, gender,role,balance}
+                })
+            }
+            
+        } catch (error) {
+            res.status(404).json({
+                message: error.message
+            })
+        }
+    }
+
+    static async deleteUser (req,res){
+        try {
+            await User.destroy({
+                where: {
+                    id: req.params.id
+                }
+            });
+
+            res.status(200).json({
+                message: "Akun berhasil di hapus"
+            })
+        } catch (error) {
+            res.status(400).json({
+                message: error.message
+            })
+        }
+    }
 }
 
 module.exports = UserController;
