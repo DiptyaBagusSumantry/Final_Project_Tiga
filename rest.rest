@@ -1,13 +1,14 @@
-POST  http://localhost:2003/users/register
-Content-Type:  application/json
+//Register
+POST http://localhost:2003/users/register
+Content-Type: application/json
 
 {
-    "full_name" : "Diptya Bagus Sumantry", 
-    "email": "diptyasoemant@gmail.com", 
+    "full_name": "Diptya Bagus Sumantry", 
+    "email": "bago@gmail.com", 
     "password": "abcd1234",
-    "gender": "Laki - Laki",
+    "gender": "Male",
     "role": "1",
-    "balance": "10000"
+    "balance": "100000000"
 }
 
 //Users
@@ -22,13 +23,23 @@ Content-Type: application/json
     "full_name" : "Diptya ", 
     "email": "diptya@gmail.com", 
     "password": "abcd1234",
-    "gender": "Laki - Laki",
+    "gender": "Male",
     "role": "1",
     "balance": "10000"   
 }
 
 ###
 DELETE http://localhost:2003/users/delete/1
+
+//Category
+###
+POST http://localhost:2003/category/create
+Content-Type: application/json
+
+{
+    "tipe": "Hobi dan Koleksi", 
+    "sold_product_amount": 5
+}
 
 //Product
 ###
@@ -39,14 +50,13 @@ Content-Type: application/json
     "title": "Susu Murni",
     "price": "10000",
     "stock": "10", 
-    "CatagoryId": 5
+    "CatagoryId": 2
 }
 
 ###
 GET http://localhost:2003/product/get
 
 ###
-
 PUT http://localhost:2003/product/update/1
 Content-Type: application/json
 
@@ -54,7 +64,7 @@ Content-Type: application/json
     "title": "Susu Sapi",
     "price": "10000",
     "stock": "20", 
-    "CatagoryId": 5
+    "CatagoryId": 1
 }
 
 ###

@@ -28,8 +28,10 @@ class UserController{
                 })
             }
         } catch (error) {
+            // console.log(error)
             res.status(404).json({
-                message: error.message
+                // message: error.message
+                message: error.errors[0].message
             })
         }
     }

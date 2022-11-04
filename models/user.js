@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.Product);
-      this.hasMany(models.TransactionHistory);
-      this.hasMany(models.Category)
+      // this.hasMany(models.Product);
+      // this.hasMany(models.TransactionHistory);
+      // this.hasMany(models.Category);
     }
   }
   User.init({
@@ -66,7 +66,10 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: "Gander tidak boleh kosong"
         },
-        equals: ['male', 'female']
+        isIn: {
+          args: [["Male", "Female"]],
+          msg: "pilih Male atau Female"
+        }
     }
     },
     role: {
@@ -77,7 +80,10 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: "Role harus di isi"
         },
-       equals: [1 , 2] // 1. ADMIN 2.Customer
+       isIn: {
+        args: [[1 , 2]],
+        msg: "Role Masukan 1 untuk Admin, 2. untuk customer" // 1. ADMIN 2.Customer
+    } 
       }
     },
     balance: {
@@ -92,7 +98,14 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: "Balance Harus Masukan Angka"
         },
-        len: [1,100000000]
+        max: {
+          args: 100000000,
+          msg: "Balance maksimal 100.000.000"
+        },
+        min: {
+          args: 1,
+          msg: "Balance tidak Boleh 0"
+        }
       }
     }
   }, {
