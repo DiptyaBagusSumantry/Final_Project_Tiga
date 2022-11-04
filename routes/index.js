@@ -3,7 +3,10 @@ const UserController = require('../Controllers/UserController');
 const ProductController = require('../Controllers/ProductController');
 const CategoryController = require('../Controllers/CatagoryController')
 
-router.post('/users/register', UserController.register )
+//Register
+router.post('/register', UserController.register)
+//Login
+router.post('/login', UserController.login);
 
 //Users
 router.get('/users/get', UserController.getUser);

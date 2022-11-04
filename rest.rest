@@ -1,14 +1,24 @@
 //Register
-POST http://localhost:2003/users/register
+POST http://localhost:2003/register
 Content-Type: application/json
 
 {
     "full_name": "Diptya Bagus Sumantry", 
-    "email": "bao@gmail.com", 
+    "email": "basokokok@gmail.com", 
     "password": "abcd1234",
     "gender": "Male",
-    "role": "1",
-    "balance": "100000000"
+    "role": "2",
+    "balance": "10000000"
+}
+
+//Login
+###
+POST http://localhost:2003/login
+Content-Type: application/json
+
+{
+    "email": "bao@gmail.com", 
+    "password": "abcd1234"
 }
 
 //Users
