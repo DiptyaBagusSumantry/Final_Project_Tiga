@@ -1,4 +1,5 @@
 const {User} = require('../models');
+const { comparePassword } = require('../helpers/bcrypt');
 
 class UserController{
     static async register (req,res){
