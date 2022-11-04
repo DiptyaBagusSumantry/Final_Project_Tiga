@@ -1,12 +1,15 @@
 const router = require('express').Router();
+const authentication = require('../middlewares/authentication')
 const UserController = require('../Controllers/UserController');
 const ProductController = require('../Controllers/ProductController');
-const CategoryController = require('../Controllers/CatagoryController')
+const CategoryController = require('../Controllers/CatagoryController');
 
 //Register
 router.post('/register', UserController.register)
 //Login
 router.post('/login', UserController.login);
+
+router.use(authentication)
 
 //Users
 router.get('/users/get', UserController.getUser);

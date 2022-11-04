@@ -1,3 +1,5 @@
+@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJiYW9AZ21haWwuY29tIiwiaWF0IjoxNjY3NTQ4ODM0LCJleHAiOjE2Njc1NTYwMzR9.JLQez20rAaNymTNAG2UnCmEPKunkeqOU1OXe-NHOPNE
+
 //Register
 POST http://localhost:2003/register
 Content-Type: application/json
@@ -24,14 +26,16 @@ Content-Type: application/json
 //Users
 ###
 GET http://localhost:2003/users/get
+x-access-token: {{x-access-token}}
 
 ###
 PUT http://localhost:2003/users/update/1
 Content-Type: application/json
+x-access-token: {{x-access-token}}
 
 {
     "full_name" : "Diptya ", 
-    "email": "diptya@gmail.com", 
+    "email": "diptyaa@gmail.com", 
     "password": "abcd1234",
     "gender": "Male",
     "role": "1",
@@ -40,11 +44,13 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:2003/users/delete/1
+x-access-token: {{x-access-token}}
 
 //Category
 ###
 POST http://localhost:2003/category/create
 Content-Type: application/json
+x-access-token: {{x-access-token}}
 
 {
     "tipe": "Hobi dan Koleksi", 
@@ -55,6 +61,7 @@ Content-Type: application/json
 ###
 POST http://localhost:2003/product/create
 Content-Type: application/json
+x-access-token: {{x-access-token}}
 
 {
     "title": "Susu Murni",
@@ -65,10 +72,12 @@ Content-Type: application/json
 
 ###
 GET http://localhost:2003/product/get
+x-access-token: {{x-access-token}}
 
 ###
 PUT http://localhost:2003/product/update/1
 Content-Type: application/json
+x-access-token: {{x-access-token}}
 
 {
     "title": "Susu Sapi",
@@ -79,3 +88,4 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:2003/product/delete/1
+x-access-token: {{x-access-token}}

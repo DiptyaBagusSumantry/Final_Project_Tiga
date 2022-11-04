@@ -1,6 +1,7 @@
 const {User} = require('../models');
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
+const { Op } = require("sequelize");
 
 class UserController{
     static async register (req,res){
@@ -98,10 +99,11 @@ class UserController{
     static async updateUser(req,res){
         const {full_name, email, gender,role,balance} = req.body;
         try {
+            const getId = res.locals.user.id;
             // const getId = res.locals.user.id;
             const cekEmail = await User.findOne({
                 where:{
-                    // id: {[Op.ne]: getId}, //jika id != getId
+                    id: {[Op.ne]: getId}, //jika id != getId
                     email
                 }
             });
