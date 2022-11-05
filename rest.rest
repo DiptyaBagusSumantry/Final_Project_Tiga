@@ -1,4 +1,4 @@
-@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJiYW9AZ21haWwuY29tIiwiaWF0IjoxNjY3NTQ4ODM0LCJleHAiOjE2Njc1NTYwMzR9.JLQez20rAaNymTNAG2UnCmEPKunkeqOU1OXe-NHOPNE
+@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJiYW9AZ21haWwuY29tIiwiaWF0IjoxNjY3NjExNTk1LCJleHAiOjE2Njc2MTg3OTV9.5FMaGPZb36ZrV2UdtLYeji8REN_QztcZkcbq6KGbqOE
 
 //Register
 POST http://localhost:2003/register
@@ -57,6 +57,23 @@ x-access-token: {{x-access-token}}
     "sold_product_amount": 5
 }
 
+###
+GET http://localhost:2003/category/get
+x-access-token: {{x-access-token}}
+
+###
+PATCH http://localhost:2003/category/update/1
+Content-Type: application/json
+x-access-token: {{x-access-token}}
+
+{
+    "tipe": "Mainan"
+}
+
+###
+DELETE http://localhost:2003/category/delete/1
+x-access-token: {{x-access-token}}
+
 //Product
 ###
 POST http://localhost:2003/product/create
@@ -88,4 +105,37 @@ x-access-token: {{x-access-token}}
 
 ###
 DELETE http://localhost:2003/product/delete/1
+x-access-token: {{x-access-token}}
+
+//TransactionHistory
+###
+POST http://localhost:2003/transaction/create
+Content-Type: application/json
+x-access-token: {{x-access-token}}
+
+{
+    "UserId" : "1", 
+    "ProductId": "5", 
+    "quantity": "10", 
+    "total_price": "120000"
+}
+
+###
+GET  http://localhost:2003/transaction/get
+x-access-token: {{x-access-token}}
+
+###
+PUT http://localhost:2003/transaction/update/5
+Content-Type: application/json
+x-access-token: {{x-access-token}}
+
+{
+    "UserId" : "1", 
+    "ProductId": "5", 
+    "quantity": "10", 
+    "total_price": "12"
+}
+
+###
+DELETE   http://localhost:2003/transaction/delete/5
 x-access-token: {{x-access-token}}
