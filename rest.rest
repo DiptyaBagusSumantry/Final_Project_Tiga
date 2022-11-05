@@ -1,17 +1,15 @@
-@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJiYW9AZ21haWwuY29tIiwiaWF0IjoxNjY3NjExNTk1LCJleHAiOjE2Njc2MTg3OTV9.5FMaGPZb36ZrV2UdtLYeji8REN_QztcZkcbq6KGbqOE
+@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJob2xhdUBnbWFpbC5jb20iLCJpYXQiOjE2Njc2NjQwODYsImV4cCI6MTY2NzY3MTI4Nn0.1aNuIpiYqD6SssJCqMXb0YrS-BQhIP6om8-Izjtt7wQ
 
 //Register
 POST http://localhost:2003/register
 Content-Type: application/json
 
 {
-    "full_name": "Diptya Bagus Sumantry", 
-    "email": "basaokokok@gmail.com", 
-    "password": "abcd1234",
-    "gender": "Male",
-    "role": "2",
-    "balance": "10000000"
-}
+    "full_name": "Nauval", 
+    "email": "nauval@gmail.com", 
+    "password": "123456",
+    "gender": "Male"
+} 
 
 //Login
 ###
@@ -19,28 +17,41 @@ POST http://localhost:2003/login
 Content-Type: application/json
 
 {
-    "email": "bao@gmail.com", 
-    "password": "abcd1234"
+    "email": "holau@gmail.com", 
+    "password": "123456"
 }
 
 //Users
+###
+GET http://localhost:2003/users/getLogin
+x-access-token: {{x-access-token}}
+
 ###
 GET http://localhost:2003/users/get
 x-access-token: {{x-access-token}}
 
 ###
-PUT http://localhost:2003/users/update/1
+PUT http://localhost:2003/users/update/3
 Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "full_name" : "Diptya Bagus", 
-    "email": "diptya@gmail.com"   
+    "full_name" : "111111", 
+    "email": "holau@gmail.com"   
 }
 
 ###
-DELETE http://localhost:2003/users/delete/1
+DELETE http://localhost:2003/users/delete/2
 x-access-token: {{x-access-token}}
+
+###
+PATCH http://localhost:2003/users/topup
+Content-Type: application/json
+x-access-token: {{x-access-token}}
+
+{
+    "balance" : 110000
+}
 
 //Category
 ###

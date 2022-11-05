@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const authentication = require('../middlewares/authentication')
+const authorization = require('../middlewares/authorization')
 const UserController = require('../Controllers/UserController');
 const ProductController = require('../Controllers/ProductController');
 const CategoryController = require('../Controllers/CatagoryController');
@@ -14,7 +15,11 @@ router.use(authentication)
 
 //Users
 router.get('/users/get', UserController.getUser);
+router.get('/users/getLogin', UserController.getUserLogin);
+router.patch('/users/topup', UserController.topupUser);
+router.use('/users/update/:id', authorization.authorizationUser);
 router.put('/users/update/:id', UserController.updateUser);
+router.use('/users/delete/:id', authorization.authorizationUser);
 router.delete('/users/delete/:id', UserController.deleteUser);
 
 //Product

@@ -1,38 +1,17 @@
-const {User} = require('../models');
+const { User } = require('../models');
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
 
 class UserController{
     static async register (req,res){
-        const {full_name, email, password,gender,role,balance} = req.body;
         try {
-            const cekEmail = await User.findOne({
-                where: {email}
-            });
-
-            if(cekEmail){
-                res.status(404).json({
-                    message: "Email Already Registered!"
-                })
-            }else{
-                const user = await User.create({
-                    full_name, 
-                    email, 
-                    password,
-                    gender,
-                    role,
-                    balance
-                });
-
-                res.status(201).json({
-                    message: "Menampilkan data User",
-                    data: user
-                })
-            }
+            const createUser = await User.create( req.body );
+            const {id, full_name, email, gender, balance, createdAt} = createUser
+            res.status(201).json({
+                user:  { id, full_name, email, gender, balance: "Rp."+balance, createdAt }
+            })
         } catch (error) {
-            // console.log(error)
             res.status(404).json({
-                // message: error.message
                 message: error.errors[0].message
             })
         }
@@ -57,7 +36,7 @@ class UserController{
                     res.status(400).json({
                         message: "Invalid Password!"
                     })
-                }else{
+                }else{ 
                     const token = generateToken({
                         id: user.id,
                         email: user.email
@@ -72,6 +51,21 @@ class UserController{
         }
     }
 
+    static async getUserLogin(req,res){
+        try {
+            const AuthenticatedUser = res.locals.user;
+            res.status(200).json({
+                message: "Menampilkan Data User : ",
+                data: AuthenticatedUser
+            })
+        } catch (error) {
+            res.status(404).json({
+                message: error.message
+            })
+            
+        }
+    }
+    
     static async getUser(req,res){
         try {
             const user = await User.findAll();
@@ -96,46 +90,24 @@ class UserController{
     }
 
     static async updateUser(req,res){
-        const {full_name, email, gender,role,balance} = req.body;
         try {
-            const getId = res.locals.user.id;
-            // const getId = res.locals.user.id;
-            const cekId = await User.findOne({
-                where:{
+            const user = await User.update( req.body, {
+                where: {
                     id: req.params.id
                 }
             });
 
-            if(!cekId){
-                res.status(400).json({
-                    message: "Email Tidak Tersedia!"
-                })
-            }else{
-                const user = await User.update({
-                    full_name,
-                    email,
-                    gender,
-                    role,
-                    balance
-                },{
+            if(user){
+                const getOne = await User.findOne({
                     where: {
                         id: req.params.id
-                    }
-                });
-                if(user){
-                    const getOne = await User.findOne({
-                        where: {
-                            id: req.params.id
-                        },
-                        attributes: ['id', 'full_name','email','createdAt','updatedAt']
-                    })
-                    res.status(200).json({
-                        message: "Data Berhasil di Update",
-                        user: getOne
-                    })
-                }
+                    },
+                    attributes: ['id', 'full_name','email','createdAt','updatedAt']
+                })
+                res.status(200).json({
+                    user: getOne,
+                })
             }
-            
         } catch (error) {
             res.status(404).json({
                 message: error.message
@@ -152,7 +124,35 @@ class UserController{
             });
 
             res.status(200).json({
-                message: "Akun berhasil di hapus"
+                message: "Your Account Has Been Successfully Deleted"
+            })
+        } catch (error) {
+            res.status(400).json({
+                message: error.message
+            })
+        }
+    }
+
+    static async topupUser (req,res){
+        try {
+            const AuthenticatedUser = res.locals.user;
+            const balanceUser = await User.findOne({
+                attributes: ['balance'],
+                where: {id: AuthenticatedUser.id}
+            })
+
+            const newBalance = balanceUser.balance+req.body.balance
+
+            await User.update({
+                balance: newBalance
+            }, {
+                where: {
+                    id: AuthenticatedUser.id
+                }
+            });
+
+            res.status(200).json({
+                message : "Your Balance has been successfully updated to Rp."+newBalance
             })
         } catch (error) {
             res.status(400).json({

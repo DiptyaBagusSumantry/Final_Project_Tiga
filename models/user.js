@@ -19,30 +19,36 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     full_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false, 
       validate: {
         notEmpty: {
           args: true,
-          msg: "Full Name Tidak Boleh Kosong"
+          msg: "Full Name Can't Be Empty!"
+        },
+        notNull : {
+          args: true,
+          msg: "Full Name Must Be Valid!"
         }
       }
     },
     email: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
+      unique: {
+        msg: "Email Already Registered!"
+      },
       validate: {
         notNull: {
           args: true,
-          msg: "Data harus valid!"
+          msg: "Email Must Be Valid!"
         },
         notEmpty: {
           args: true,
-          msg: "Email Tidak Boleh Kosong"
+          msg: "Email Can't Be Empty!"
         },
         isEmail:{
           args: true,
-          msg: "Email Format Salah"
+          msg: "Invalid Email Address"
         }
       }
     },
@@ -50,11 +56,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Password Must Be Valid!"
+        },
         notEmpty: {
           args: true,
-          msg: "Password harus di isi"
+          msg: "Password Can't Be Empty!"
         },
-        len:[6,10]
+        len:{
+          args: [6,10],
+          msg: "Password Must Contain 6-10 Characters"
+        }
 
       }
     },
@@ -62,13 +75,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Gender Must Be Valid!"
+        },
         notEmpty: {
           args: true,
-          msg: "Gander tidak boleh kosong"
+          msg: "Gender Can't Be Empty!"
         },
         isIn: {
           args: [["Male", "Female"]],
-          msg: "pilih Male atau Female"
+          msg: "Please Enter 'Male' Or 'Female'"
         }
     }
     },
@@ -90,32 +107,40 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Balance Must Be Valid!"
+        },
         notEmpty: {
           args: true,
-          msg: "Balance Harus di Isi"
+          msg: "Balance Must Be Filled"
         },
         isInt: {
           args: true,
-          msg: "Balance Harus Masukan Angka"
+          msg: "Please Insert Correct Format For Balance"
         },
         max: {
           args: 100000000,
-          msg: "Balance maksimal 100.000.000"
+          msg: "Minimum Balance Rp.100.000.000"
         },
         min: {
-          args: 1,
-          msg: "Balance tidak Boleh 0"
+          args: [0],
+          msg: "Minimum Balance Rp.0"
         }
       }
     }
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'User',  
     hooks: {
+      beforeValidate: (user, opt) => {
+        user.role = user.role || 1
+        user.balance = user.balance || 0
+      },
       beforeCreate: (user, opt) =>{
         const hashedPassword = hashPassword(user.password)
         user.password = hashedPassword
-      }
+       } 
     }
   });
   return User;

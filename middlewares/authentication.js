@@ -7,6 +7,7 @@ async function authentication(req,res,next){
         const userDecoded = verifyToken(token)
         
         User.findOne({
+            attributes: ['id', 'email'],
             where: {
                 id: userDecoded.id,
                 email: userDecoded.email
@@ -15,7 +16,7 @@ async function authentication(req,res,next){
 
         .then(user=>{
             if(!user){
-                res.status(404).json({
+                return res.status(404).json({
                     name: "Authenticaton Error",
                     devMessage: `User with id ${userDecoded.id} and email ${userDecoded.email} NOT FOUND `
                 });
