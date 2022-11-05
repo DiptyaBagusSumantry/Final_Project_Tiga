@@ -1,7 +1,6 @@
 const {User} = require('../models');
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
-const { Op } = require("sequelize");
 
 class UserController{
     static async register (req,res){
@@ -101,14 +100,13 @@ class UserController{
         try {
             const getId = res.locals.user.id;
             // const getId = res.locals.user.id;
-            const cekEmail = await User.findOne({
+            const cekId = await User.findOne({
                 where:{
-                    id: {[Op.ne]: getId}, //jika id != getId
-                    email
+                    id: req.params.id
                 }
             });
 
-            if(cekEmail){
+            if(!cekId){
                 res.status(400).json({
                     message: "Email Tidak Tersedia!"
                 })
@@ -124,10 +122,18 @@ class UserController{
                         id: req.params.id
                     }
                 });
-                res.status(200).json({
-                    message: "Data Berhasil di Update",
-                    // user: {full_name, email, gender,role,balance}
-                })
+                if(user){
+                    const getOne = await User.findOne({
+                        where: {
+                            id: req.params.id
+                        },
+                        attributes: ['id', 'full_name','email','createdAt','updatedAt']
+                    })
+                    res.status(200).json({
+                        message: "Data Berhasil di Update",
+                        user: getOne
+                    })
+                }
             }
             
         } catch (error) {

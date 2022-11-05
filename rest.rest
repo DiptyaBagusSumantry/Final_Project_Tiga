@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
     "full_name": "Diptya Bagus Sumantry", 
-    "email": "basokokok@gmail.com", 
+    "email": "basaokokok@gmail.com", 
     "password": "abcd1234",
     "gender": "Male",
     "role": "2",
@@ -34,12 +34,8 @@ Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "full_name" : "Diptya ", 
-    "email": "diptyaa@gmail.com", 
-    "password": "abcd1234",
-    "gender": "Male",
-    "role": "1",
-    "balance": "10000"   
+    "full_name" : "Diptya Bagus", 
+    "email": "diptya@gmail.com"   
 }
 
 ###
