@@ -1,29 +1,20 @@
-const {Category} = require('../models');
+const {Category,Product} = require('../models');
 
 class CategoryController{
     static async createCategory (req,res){
-        const {tipe, sold_product_amount} = req.body;
         try {
-            const cekTipe = await Category.findOne({
-                where: {tipe}
-            });
+            const create = await Category.create(req.body);
 
-            if(!cekTipe){
-                const create = await Category.create({
-                    tipe, 
-                    sold_product_amount
-                });
-
-                res.status(201).json({
-                    message: "Category Berhasil di tampilkan",
-                    data: create
-                })
-            }else{
-                res.status(400).json({
-                    message: "Tipe tersebut sudah ada"
+            res.status(201).json({
+                category: create
+            })
+        } catch (error) {
+            const { name } = error
+            if(name === "SequelizeUniqueConstraintError"){
+                return res.status(400).json({
+                    message: error.message
                 })
             }
-        } catch (error) {
             res.status(404).json({
                 message: error.message
             })
@@ -32,15 +23,18 @@ class CategoryController{
 
     static async getCategory (req,res){
         try {
-            const get = await Category.findAll();
+            const get = await Category.findAll({
+                include: [{
+                    model: Product
+                }]
+            });
             if(get.length>0){
                 res.status(200).json({
-                    message: "Menampilkan Data Category",
-                    data: get
+                    categories: get
                 })
             }else{
                 res.status(200).json({
-                    message: "Belum ada Category"
+                    message: "Category Not Found!"
                 })
             }
         } catch (error) {
@@ -51,20 +45,26 @@ class CategoryController{
     }
 
     static async updateCategory (req,res){
-        const {tipe, sold_product_amount} = req.body;
         try {
-            await Category.update({
-                tipe, 
-                sold_product_amount
-            }, {
-                where: {
-                    id: req.params.id
-                }
-            });
-
-            res.status(200).json({
-                message: "Data berhasiil di update"
+            const find = await Category.findOne({
+                attributes: ['id'],
+                where: {id: req.params.id}
             })
+            if(find){
+                await Category.update(req.body, {
+                    where: {id: req.params.id}
+                });
+                const getUpdate = await Category.findOne({
+                    where: {id: req.params.id}
+                })
+                res.status(200).json({
+                    category: getUpdate
+                })
+            } else {
+                res.status(400).json({
+                    message: "There is No Such Category With ID "+req.params.id
+                })
+            }
         } catch (error) {
             res.status(404).json({
                 message: error.message
@@ -74,14 +74,22 @@ class CategoryController{
 
     static async deleteCategory (req,res){
         try {
-            await Category.destroy({
-                where: {
-                    id: req.params.id
-                }
+            const find = await Category.findOne({
+                attributes: ['id'],
+                where: {id: req.params.id}
             })
-            res.status(200).json({
-                message: "Data Berhasil di Hapus"
-            })
+            if(find){
+                await Category.destroy({
+                    where: {id: req.params.id}
+                })
+                res.status(200).json({
+                    message: "Category Has Been Successfully Deleted"
+                })
+            } else {
+                res.status(400).json({
+                    message: "There is No Such Category With ID "+req.params.id
+                })
+            }
         } catch (error) {
             res.status(404).json({
                 message: error.message

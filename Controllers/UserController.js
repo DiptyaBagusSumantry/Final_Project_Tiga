@@ -6,9 +6,9 @@ class UserController{
     static async register (req,res){
         try {
             const createUser = await User.create( req.body );
-            const {id, full_name, email, gender, balance, createdAt} = createUser
+            createUser.balace = "Rp."+createUser.balace
             res.status(201).json({
-                user:  { id, full_name, email, gender, balance: "Rp."+balance, createdAt }
+                user: createUser
             })
         } catch (error) {
             res.status(404).json({
@@ -92,16 +92,12 @@ class UserController{
     static async updateUser(req,res){
         try {
             const user = await User.update( req.body, {
-                where: {
-                    id: req.params.id
-                }
+                where: {id: res.locals.user.id}
             });
 
             if(user){
                 const getOne = await User.findOne({
-                    where: {
-                        id: req.params.id
-                    },
+                    where: {id: res.locals.user.id},
                     attributes: ['id', 'full_name','email','createdAt','updatedAt']
                 })
                 res.status(200).json({
@@ -118,9 +114,7 @@ class UserController{
     static async deleteUser (req,res){
         try {
             await User.destroy({
-                where: {
-                    id: req.params.id
-                }
+                where: {id: res.locals.user.id}
             });
 
             res.status(200).json({
@@ -135,10 +129,9 @@ class UserController{
 
     static async topupUser (req,res){
         try {
-            const AuthenticatedUser = res.locals.user;
             const balanceUser = await User.findOne({
                 attributes: ['balance'],
-                where: {id: AuthenticatedUser.id}
+                where: {id: res.locals.user.id}
             })
 
             const newBalance = balanceUser.balance+req.body.balance
@@ -147,7 +140,7 @@ class UserController{
                 balance: newBalance
             }, {
                 where: {
-                    id: AuthenticatedUser.id
+                    id: res.locals.user.id
                 }
             });
 

@@ -11,37 +11,72 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // this.belongsTo(models.User)
+      this.belongsTo(models.Product)
+      this.belongsTo(models.User)
     }
   }
   TransactionHistory.init({
-    ProductId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER,
+    ProductId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "ProductId Can't Be Null!"
+        },
+        notEmpty: {
+          args: true,
+          msg: "ProductId Can't Be Empty!"
+        }
+      }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "ProductId Can't Be Null!"
+        },
+        notEmpty: {
+          args: true,
+          msg: "ProductId Can't Be Empty!"
+        }
+      }
+    },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-      notEmpty: {
-        args: true,
-        msg: "Quantity harus di isi"
-      },
-      isInt: {
-        args: true,
-        msg: "Harus memasukan angka"
+        notNull: {
+          args: true,
+          msg: "Quantity Can't Be Null!"
+        },
+        notEmpty: {
+          args: true,
+          msg: "Quantity Can't Be Empty!"
+        },
+        isInt: {
+          args: true,
+          msg: "Please Insert Correct Format For Quantity"
+        }
       }
-    }
     },
     total_price: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Total Price Can't Be Null!"
+        },
         notEmpty: {
           args: true,
-          msg: "quantity tidak boleh kosong"
+          msg: "Total Price tidak boleh kosong"
         },
         isInt: {
           args: true,
-          msg: "Harus memasukan angka"
+          msg: "Please Insert Correct Format For Total Price"
         }
     }
     }

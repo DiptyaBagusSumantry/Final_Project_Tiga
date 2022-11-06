@@ -11,9 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // this.hasMany(models.Product);
-      // this.hasMany(models.TransactionHistory);
-      // this.hasMany(models.Category);
+      this.hasMany(models.TransactionHistory);
     }
   }
   User.init({
@@ -27,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull : {
           args: true,
-          msg: "Full Name Must Be Valid!"
+          msg: "Full Name Can't Be Null!"
         }
       }
     },
@@ -40,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg: "Email Must Be Valid!"
+          msg: "Email Can't Be Null!"
         },
         notEmpty: {
           args: true,
@@ -58,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg: "Password Must Be Valid!"
+          msg: "Password Can't Be Null!"
         },
         notEmpty: {
           args: true,
@@ -77,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg: "Gender Must Be Valid!"
+          msg: "Gender Can't Be Null!"
         },
         notEmpty: {
           args: true,
@@ -93,13 +91,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Role Can't Be Null!"
+        },
         notEmpty: {
           args: true,
-          msg: "Role harus di isi"
+          msg: "Role Can't Be Empty!"
         },
        isIn: {
         args: [[1 , 2]],
-        msg: "Role Masukan 1 untuk Admin, 2. untuk customer" // 1. ADMIN 2.Customer
+        msg: "Please Enter 1 For Admin or 2 For Customer" // 1. ADMIN 2.Customer
     } 
       }
     },
@@ -121,11 +123,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         max: {
           args: 100000000,
-          msg: "Minimum Balance Rp.100.000.000"
+          msg: "Maximum Balance is Rp.100.000.000"
         },
         min: {
           args: [0],
-          msg: "Minimum Balance Rp.0"
+          msg: "Minimum Balance is Rp.0"
         }
       }
     }
@@ -134,7 +136,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',  
     hooks: {
       beforeValidate: (user, opt) => {
-        user.role = user.role || 1
+        user.role = user.role || 2
         user.balance = user.balance || 0
       },
       beforeCreate: (user, opt) =>{

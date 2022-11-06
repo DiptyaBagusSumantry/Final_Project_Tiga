@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // this.belongsTo(models.User);
-      // this.hasMany(models.Category);
+      this.belongsTo(models.Category);
+      this.hasMany(models.TransactionHistory);
     }
   }
   Product.init({
@@ -20,9 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Title Can't Be Null!"
+        },
         notEmpty: {
           args: true,
-          msg: "Tidak boleh Kosong"
+          msg: "Title Can't Be Empty!"
         }
       }
 
@@ -31,34 +35,62 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Price Can't Be Null!"
+        },
         notEmpty: {
           args: true,
-          msg: "Price Harus di Isi"
+          msg: "Price Can't Be Empty!"
         },
         isInt: {
           args: true,
-          msg: "Price harus angka"
+          msg: "Please Insert Correct Format For Price"
         },
-        len: [1,50000000]
+        max: {
+          args: 50000000,
+          msg: "Maximum Price is Rp.50.000.000"
+        },
+        min: {
+          args: [0],
+          msg: "Minimum Price is Rp.0"
+        }
       }
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          args: true,
+          msg: "Stock Can't Be Null!"
+        },
         notEmpty: {
           args: true,
-          msg: "Stock tidak boleh kosong"
+          msg: "Stock Can't Be Empty!"
         },
         min: 5,
         isInt: {
           args: true,
-          msg: "Harus memasukan angka"
+          msg: "Minimum Stock is 5"
         },
         
       }
     },
-    CatagoryId: DataTypes.INTEGER
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Stock Can't Be Null!"
+        },
+        notEmpty: {
+          args: true,
+          msg: "Stock Can't Be Empty!"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Product',

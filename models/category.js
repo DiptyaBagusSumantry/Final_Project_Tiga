@@ -12,16 +12,24 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // this.belongsTo(models.User)
+      this.hasMany(models.Product);
     }
   }
   Category.init({
     tipe: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        msg: "Type Already Registered!"
+      },
       validate: {
+        notNull:{
+          args: true,
+          msg: "Type Can't Be Null!"
+        },
         notEmpty: {
           args: true,
-          msg: "Tipe harus di Isi"
+          msg: "Type Can't Be Empty!"
         }
       }
     },
@@ -29,19 +37,28 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull:{
+          args: true,
+          msg: "Sold Amount Can't Be Null!"
+        },
         notEmpty: {
           args: true,
-          msg: "soldProduct harus di isi"
+          msg: "Sold Amount Can't Be Empty!"
         },
         isInt: {
           args: true,
-          msg: "Harus Memasukan Angka"
+          msg: "Please Insert Correct Format For Sold Amount"
         }
       }
     }
   }, {
     sequelize,
     modelName: 'Category',
+    hooks: {
+      beforeValidate: (category, opt) => {
+        category.sold_product_amount = category.sold_product_amount || 0
+      }
+    }
   });
   return Category;
 };

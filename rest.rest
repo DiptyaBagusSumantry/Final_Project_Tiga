@@ -1,12 +1,12 @@
-@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJob2xhdUBnbWFpbC5jb20iLCJpYXQiOjE2Njc2NjQwODYsImV4cCI6MTY2NzY3MTI4Nn0.1aNuIpiYqD6SssJCqMXb0YrS-BQhIP6om8-Izjtt7wQ
-
+@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc2Rhc2RAZ21haWwuY29tIiwiaWF0IjoxNjY3NzMyNTkwLCJleHAiOjE2Njc3Mzk3OTB9.NECEOkjCLNGLQs3aRD9v-G32nMA5wfJayB4xh4b3FZc
+# @x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2Njc3MjMwMDEsImV4cCI6MTY2NzczMDIwMX0.-rxxvGXTzNHfYc6t_sy4yV052s7NrbvLbmUrR9azGTM
 //Register
 POST http://localhost:2003/register
 Content-Type: application/json
 
 {
     "full_name": "Nauval", 
-    "email": "nauval@gmail.com", 
+    "email": "asdasd@gmail.com", 
     "password": "123456",
     "gender": "Male"
 } 
@@ -17,7 +17,7 @@ POST http://localhost:2003/login
 Content-Type: application/json
 
 {
-    "email": "holau@gmail.com", 
+    "email": "asdasd@gmail.com", 
     "password": "123456"
 }
 
@@ -31,17 +31,17 @@ GET http://localhost:2003/users/get
 x-access-token: {{x-access-token}}
 
 ###
-PUT http://localhost:2003/users/update/3
+PUT http://localhost:2003/users/update
 Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "full_name" : "111111", 
-    "email": "holau@gmail.com"   
+    "full_name" : "admin", 
+    "email": "admin@gmail.com"   
 }
 
 ###
-DELETE http://localhost:2003/users/delete/2
+DELETE http://localhost:2003/users/delete
 x-access-token: {{x-access-token}}
 
 ###
@@ -60,8 +60,7 @@ Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "tipe": "Hobi dan Koleksi", 
-    "sold_product_amount": 5
+    "tipe": "asd"
 }
 
 ###
@@ -69,16 +68,16 @@ GET http://localhost:2003/category/get
 x-access-token: {{x-access-token}}
 
 ###
-PATCH http://localhost:2003/category/update/1
+PATCH http://localhost:2003/category/update/2
 Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "tipe": "Mainan"
+    "tipe": "Hobii"
 }
 
 ###
-DELETE http://localhost:2003/category/delete/1
+DELETE http://localhost:2003/category/delete/12
 x-access-token: {{x-access-token}}
 
 //Product
@@ -89,9 +88,9 @@ x-access-token: {{x-access-token}}
 
 {
     "title": "Susu Murni",
-    "price": "10000",
-    "stock": "10", 
-    "CatagoryId": 2
+    "price": 10000,
+    "stock": 10, 
+    "CategoryId": 9
 }
 
 ###
@@ -99,19 +98,27 @@ GET http://localhost:2003/product/get
 x-access-token: {{x-access-token}}
 
 ###
-PUT http://localhost:2003/product/update/1
+PUT http://localhost:2003/product/update/2
 Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
     "title": "Susu Sapi",
-    "price": "10000",
-    "stock": "20", 
-    "CatagoryId": 1
+    "price": 10000,
+    "stock": 123
 }
 
 ###
-DELETE http://localhost:2003/product/delete/1
+PATCH http://localhost:2003/product/patch/2
+Content-Type: application/json
+x-access-token: {{x-access-token}}
+
+{
+    "CategoryId": 9
+}
+
+###
+DELETE http://localhost:2003/product/delete/6
 x-access-token: {{x-access-token}}
 
 //TransactionHistory
@@ -121,28 +128,18 @@ Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "UserId" : "1", 
-    "ProductId": "5", 
-    "quantity": "10", 
-    "total_price": "120000"
+    "ProductId": 4, 
+    "quantity": 10
 }
 
 ###
-GET  http://localhost:2003/transaction/get
+GET  http://localhost:2003/transaction/get/user
 x-access-token: {{x-access-token}}
 
 ###
-PUT http://localhost:2003/transaction/update/5
-Content-Type: application/json
+GET  http://localhost:2003/transaction/get/admin
 x-access-token: {{x-access-token}}
 
-{
-    "UserId" : "1", 
-    "ProductId": "5", 
-    "quantity": "10", 
-    "total_price": "12"
-}
-
 ###
-DELETE   http://localhost:2003/transaction/delete/5
+GET   http://localhost:2003/transaction/2
 x-access-token: {{x-access-token}}
