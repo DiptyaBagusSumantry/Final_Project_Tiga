@@ -102,18 +102,14 @@ class UserController{
     static async updateUser(req,res){
         try {
             const user = await User.update( req.body, {
-                where: {id: res.locals.user.id}
+                where: {id: res.locals.user.id},
+                returning: true,
+                plain: true
             });
-
-            if(user){
-                const getOne = await User.findOne({
-                    where: {id: res.locals.user.id},
-                    attributes: ['id', 'full_name','email','createdAt','updatedAt']
-                })
-                res.status(200).json({
-                    user: getOne,
-                })
-            }
+            const { id, full_name, email, createdAt, updatedAt } = user[1]
+            res.status(200).json({
+                user: { id, full_name, email, createdAt, updatedAt }
+            })
         } catch (error) {
             res.status(404).json({
                 message: error.message

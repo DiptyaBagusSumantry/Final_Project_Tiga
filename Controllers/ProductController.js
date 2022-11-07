@@ -51,15 +51,14 @@ class ProductController{
                 where: {id: req.params.id}
             })
             if(find){
-                await Product.update(req.body,{
-                    where: {id: req.params.id}
+                const update = await Product.update(req.body,{
+                    where: {id: req.params.id},
+                    returning: true,
+                    plain: true
                 });
-                const getUpdate = await Product.findOne({
-                    where:{id: req.params.id}
-                })
-                getUpdate.price = "Rp."+getUpdate.price
+                update[1].price = "Rp."+update[1].price
                 res.status(200).json({
-                    product: getUpdate
+                    product: update[1]
                 })
             } else {
                 res.status(400).json({

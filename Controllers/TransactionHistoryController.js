@@ -186,9 +186,9 @@ class TransactionHistoryContoller{
             if(get){
                 get.total_price = "Rp."+get.total_price
                 get.Product.price = "Rp."+get.Product.price
-                res.status(200).json({
-                    transactionHistories : get
-                })
+                res.status(200).json(
+                    get
+                )
             } else {
                 res.status(400).json({
                     message: "There is No Such Transaction With ID "+req.params.id

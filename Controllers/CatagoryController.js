@@ -3,18 +3,20 @@ const {Category,Product} = require('../models');
 class CategoryController{
     static async createCategory (req,res){
         try {
-            const create = await Category.create(req.body);
-
-            res.status(201).json({
-                category: create
+            const find = await Category.findOne({
+                where: {tipe: req.body.tipe}
             })
-        } catch (error) {
-            const { name } = error
-            if(name === "SequelizeUniqueConstraintError"){
+            if(!find){
+                const create = await Category.create(req.body);
+                res.status(201).json({
+                    category: create
+                })
+            }else{
                 return res.status(400).json({
-                    message: error.message
+                    message: "Type is already registered!"
                 })
             }
+        } catch (error) {
             res.status(404).json({
                 message: error.message
             })
@@ -51,14 +53,13 @@ class CategoryController{
                 where: {id: req.params.id}
             })
             if(find){
-                await Category.update(req.body, {
-                    where: {id: req.params.id}
+                const update = await Category.update(req.body, {
+                    where: {id: req.params.id},
+                    returning: true,
+                    plain: true
                 });
-                const getUpdate = await Category.findOne({
-                    where: {id: req.params.id}
-                })
                 res.status(200).json({
-                    category: getUpdate
+                    category: update[1]
                 })
             } else {
                 res.status(400).json({
