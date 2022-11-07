@@ -5,11 +5,29 @@ const { generateToken } = require('../helpers/jwt');
 class UserController{
     static async register (req,res){
         try {
-            const createUser = await User.create( req.body );
-            createUser.balace = "Rp."+createUser.balace
-            res.status(201).json({
-                user: createUser
-            })
+            const {email} = req.body;
+            const cekEmail = await User.findOne({
+                where: {email}
+            });
+            if(cekEmail){
+                res.status(400).json({
+                    message: "Email Already Registerd!"
+                });
+            }else{
+                const createUser = await User.create( req.body );
+                const data = await User.findOne({
+                    where: {
+                        id: createUser.id
+                    },
+                    attributes: {
+                        exclude: ['role', 'updatedAt', 'password']
+                    }
+                });   
+                data.balance = "Rp."+data.balance
+                res.status(201).json({
+                    user: data
+                })
+            }
         } catch (error) {
             res.status(404).json({
                 message: error.errors[0].message
