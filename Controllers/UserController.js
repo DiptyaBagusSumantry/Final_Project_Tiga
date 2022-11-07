@@ -15,17 +15,9 @@ class UserController{
                 });
             }else{
                 const createUser = await User.create( req.body );
-                const data = await User.findOne({
-                    where: {
-                        id: createUser.id
-                    },
-                    attributes: {
-                        exclude: ['role', 'updatedAt', 'password']
-                    }
-                });   
-                data.balance = "Rp."+data.balance
+                const {id, full_name, email, gender, balance, createdAt } = createUser;
                 res.status(201).json({
-                    user: data
+                    user: {id, full_name,email,gender,balance: "Rp."+balance, createdAt}
                 })
             }
         } catch (error) {
