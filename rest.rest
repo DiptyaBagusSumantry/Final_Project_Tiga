@@ -1,4 +1,4 @@
-@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc2Rhc2RAZ21haWwuY29tIiwiaWF0IjoxNjY3NzMyNTkwLCJleHAiOjE2Njc3Mzk3OTB9.NECEOkjCLNGLQs3aRD9v-G32nMA5wfJayB4xh4b3FZc
+@x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2Njc4MTU4MjEsImV4cCI6MTY2NzgyMzAyMX0.1uqLs5TTbCBCvev00S2VL8m9aSXysIruTjRoDaYAsOQ
 # @x-access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2Njc3MjMwMDEsImV4cCI6MTY2NzczMDIwMX0.-rxxvGXTzNHfYc6t_sy4yV052s7NrbvLbmUrR9azGTM
 //Register
 POST http://localhost:2003/register
@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
     "full_name": "Nauval", 
-    "email": "asdasd@gmail.com", 
+    "email": "asdasdasdasd@gmail.com", 
     "password": "123456",
     "gender": "Male"
 } 
@@ -17,7 +17,7 @@ POST http://localhost:2003/login
 Content-Type: application/json
 
 {
-    "email": "asdasd@gmail.com", 
+    "email": "admin@gmail.com", 
     "password": "123456"
 }
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "full_name" : "admin", 
+    "full_name" : "123", 
     "email": "admin@gmail.com"   
 }
 
@@ -60,7 +60,7 @@ Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "tipe": "asd"
+    "tipe": "asddd"
 }
 
 ###
@@ -68,16 +68,16 @@ GET http://localhost:2003/category/get
 x-access-token: {{x-access-token}}
 
 ###
-PATCH http://localhost:2003/category/update/2
+PATCH http://localhost:2003/category/update/1
 Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "tipe": "Hobii"
+    "tipe": "Hobiiiiii"
 }
 
 ###
-DELETE http://localhost:2003/category/delete/12
+DELETE http://localhost:2003/category/delete/14
 x-access-token: {{x-access-token}}
 
 //Product
@@ -114,7 +114,7 @@ Content-Type: application/json
 x-access-token: {{x-access-token}}
 
 {
-    "CategoryId": 9
+    "CategoryId": 1
 }
 
 ###
