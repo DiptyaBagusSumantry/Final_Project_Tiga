@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 module.exports = {
-    development: {
+    "development": {
         "username": "postgres",
         "password": "1234",
         "database": "finalProjectTiga",
