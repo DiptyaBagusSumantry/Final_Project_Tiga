@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 module.exports = {
-    "development": {
+    development: {
         "username": "postgres",
         "password": "1234",
         "database": "finalProjectTiga",
@@ -22,7 +22,7 @@ module.exports = {
         database: process.env.PGDATABASE,
         host: process.env.PGHOST,
         host: process.env.PGPORT,
-        dialect: postgres
+        dialect: "postgres"
     }
 
 }
